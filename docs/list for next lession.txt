@@ -1,0 +1,23 @@
+---- NOT READY ----
+1) react + ts					| 3
+2) next.js						| 0
+3) unit tests					| 1
+4) animation					| 0
+5) multi language				| 0
+------ READY ------
+6) mongo aggrigate				| 4
+7) nodejs + react new project	| 8
+8) nodejs only project			| 9
+nodejs
+express
+env/config
+bcrypt js
+jwt
+mongoose
+joi
+---
+cors
+helmet
+compression
+git
+readme
