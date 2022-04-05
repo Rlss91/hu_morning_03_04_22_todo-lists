@@ -34,7 +34,7 @@ const signupRoles = {
 };
 
 const signupSchema = Joi.object(signupRoles);
-const loginSchema = Joi.object(signupRoles);
+const loginSchema = Joi.object(loginRoles);
 
 module.exports = {
   signupSchema,
