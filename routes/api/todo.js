@@ -25,4 +25,26 @@ router.post("/", async (req, res) => {
   }
 });
 
+//create new task in todo
+router.post("/newTask", async (req, res) => {
+  //id of todo
+  //task cmd and task isDone
+  try {
+    const validatedValue = await todoValidation.taskCreateSchema.validateAsync(
+      { ...req.body },
+      {
+        abortEarly: false,
+      }
+    );
+    const updateTodoInfo = await todoModel.insertTaskToTodoByTodoId(
+      validatedValue._id,
+      validatedValue.cmd,
+      validatedValue.isDone
+    );
+    res.json({ msg: "todo updated" });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+});
+
 module.exports = router;

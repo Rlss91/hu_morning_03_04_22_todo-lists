@@ -19,6 +19,18 @@ const insertTodo = (title, createdBy, tasks) => {
   return newTodo.save();
 };
 
+const insertTaskToTodoByTodoId = (_id, cmd, isDone) => {
+  return Todo.updateOne(
+    { _id },
+    {
+      $push: {
+        tasks: { cmd, isDone },
+      },
+    }
+  );
+};
+
 module.exports = {
   insertTodo,
+  insertTaskToTodoByTodoId,
 };
