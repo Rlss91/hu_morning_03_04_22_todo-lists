@@ -1,9 +1,11 @@
 const Joi = require("joi");
 
-const emailRole = {
+const forgetPasswordRoles = {
   email: Joi.string().email().min(5).max(255).trim().required(),
 };
-const passwordRole = {
+
+const loginRoles = {
+  ...forgetPasswordRoles,
   password: Joi.string()
     .regex(
       new RegExp("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()]).{6,}$")
@@ -16,7 +18,8 @@ const passwordRole = {
 //(?=.*[!@#$%^&*()]) at least one of this special characters !@#$%^&*()
 //{6,} the password must be at least 6 characters
 
-const firstnameRole = {
+const signupRoles = {
+  ...loginRoles,
   firstname: Joi.string()
     .min(2)
     .max(255)
@@ -24,9 +27,6 @@ const firstnameRole = {
     .trim()
     .regex(new RegExp("^[A-Z][a-zA-Z0-9]+$"))
     .required(),
-};
-
-const lastnameRole = {
   lastname: Joi.string()
     .min(2)
     .max(255)
@@ -34,30 +34,12 @@ const lastnameRole = {
     .trim()
     .regex(new RegExp("^[A-Z][a-zA-Z0-9]+$"))
     .required(),
-};
-
-const phoneRole = {
   phone: Joi.string().min(7).max(255).trim(),
 };
 
-const recoveryNumberRole = {
-  recoveyNumber: Joi.number().min(100000).max(999999).required(),
-};
-
-const signupSchema = Joi.object({
-  ...emailRole,
-  ...passwordRole,
-  ...firstnameRole,
-  ...lastnameRole,
-  ...phoneRole,
-});
-const loginSchema = Joi.object({ ...emailRole, ...passwordRole });
-const forgetPasswordSchema = Joi.object({ ...emailRole });
-const recoverPassworSchema = Joi.object({
-  ...emailRole,
-  ...recoveryNumberRole,
-  ...passwordRole,
-});
+const signupSchema = Joi.object(signupRoles);
+const loginSchema = Joi.object(loginRoles);
+const forgetPasswordSchema = Joi.object(forgetPasswordRoles);
 
 // const validateAsync = (validateSchema, body) => {
 //   return validateSchema.validateAsync(body, {
@@ -69,5 +51,4 @@ module.exports = {
   signupSchema,
   loginSchema,
   forgetPasswordSchema,
-  recoverPassworSchema,
 };
