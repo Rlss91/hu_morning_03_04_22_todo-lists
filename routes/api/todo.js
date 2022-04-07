@@ -4,6 +4,15 @@ const router = express.Router();
 const todoValidation = require("../../validation/todo.validation");
 const todoModel = require("../../models/todo.model");
 
+router.get("/", async (req, res) => {
+  try {
+    const todos = await todoModel.selectTodosByCreatedId(req.userData._id);
+    res.json({ todos });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+});
+
 //create new todo
 router.post("/", async (req, res) => {
   try {

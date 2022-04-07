@@ -10,6 +10,10 @@ const todoSchema = new Schema({
 
 const Todo = mongoose.model("Todos", todoSchema);
 
+const selectTodosByCreatedId = (createdBy) => {
+  return Todo.find({ createdBy });
+};
+
 const insertTodo = (title, createdBy, tasks) => {
   const newTodo = new Todo({
     title,
@@ -33,4 +37,5 @@ const insertTaskToTodoByTodoId = (_id, cmd, isDone) => {
 module.exports = {
   insertTodo,
   insertTaskToTodoByTodoId,
+  selectTodosByCreatedId,
 };
