@@ -106,32 +106,6 @@ router.post("/forgetpassword", async (req, res) => {
   }
 });
 
-//old way
-// router.post("/forgetpassword", async (req, res) => {
-//   try {
-//     const validatedValue =
-//       await usersValidation.forgetPasswordSchema.validateAsync(req.body, {
-//         abortEarly: false,
-//       });
-//     const users = await usersModule.selectUserByEmail(validatedValue.email);
-//     if (users.length > 0) {
-//       const rnum = randomNumber(100000, 999999);
-//       //30             * 60      * 1000        = 1,800,000
-//       //minuts we want * seconds * miliseconds =
-//       const expDate = new Date(Date.now() + 1800000);
-//       console.log({ rnum, expDate });
-//       await usersModule.updateRecoveryParams(
-//         validatedValue.email,
-//         rnum,
-//         expDate
-//       );
-//     }
-//     res.json({ msg: "link send to your email" });
-//   } catch (err) {
-//     res.status(400).json({ err });
-//   }
-// });
-
 router.post("/recoverypassword/:email/:recoveyNumber", async (req, res) => {
   try {
     const validatedValue =
