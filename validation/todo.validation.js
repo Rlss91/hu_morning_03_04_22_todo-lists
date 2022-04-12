@@ -27,11 +27,11 @@ const todoCreateSchema = Joi.object({
 });
 
 const todoUpdateSchema = Joi.object({
-  ...GeneralRoles.objectIdRoles,
+  ...GeneralRoles.objectIdRolesDynamic(),
   ...titleRoles,
 });
 const todoDeleteSchema = Joi.object({
-  ...GeneralRoles.objectIdRoles,
+  ...GeneralRoles.objectIdRolesDynamic(),
 });
 
 module.exports = {
