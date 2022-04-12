@@ -1,9 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const taskRouter = require("./todo-task");
 const todoValidation = require("../../validation/todo.validation");
 const todoModel = require("../../models/todo.model");
 
+//http://localhost:3000/api/todo/task
+router.use("/task", taskRouter);
+
+//http://localhost:3000/api/todo/
+//get all tasks that was created by user
 router.get("/", async (req, res) => {
   try {
     const todos = await todoModel.selectTodosByCreatedId(req.userData._id);
