@@ -49,7 +49,7 @@ router.patch("/", async (req, res) => {
         abortEarly: true,
       }
     );
-    const updateTodo = await todoModel.updateTaskTitleByTodoId(
+    const updateTodo = await todoModel.updateTodoTitleByTodoId(
       validatedValue._id,
       req.userData._id,
       validatedValue.title

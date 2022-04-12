@@ -34,8 +34,15 @@ const insertTaskToTodoByTodoId = (_id, cmd, isDone) => {
   );
 };
 
-const updateTaskTitleByTodoId = (_id, createdBy, title) => {
+const updateTodoTitleByTodoId = (_id, createdBy, title) => {
   return Todo.updateOne({ $and: [{ _id }, { createdBy }] }, { title });
+};
+
+const updateTaskByTodoId = (_id, _idTask, createdBy, cmd, isDone) => {
+  return Todo.updateOne(
+    { _id, tasks: { $elemMatch: { _id: _idTask } }, createdBy },
+    { "tasks.$.cmd": cmd, "tasks.$.isDone": isDone }
+  );
 };
 
 const deleteTaskByTodoId = (_id, createdBy) => {
@@ -46,6 +53,7 @@ module.exports = {
   insertTodo,
   insertTaskToTodoByTodoId,
   selectTodosByCreatedId,
-  updateTaskTitleByTodoId,
+  updateTodoTitleByTodoId,
+  updateTaskByTodoId,
   deleteTaskByTodoId,
 };
