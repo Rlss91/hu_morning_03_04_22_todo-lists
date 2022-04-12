@@ -69,7 +69,7 @@ router.delete("/", async (req, res) => {
         abortEarly: true,
       }
     );
-    const deleteTodo = await todoModel.deleteTaskByTodoId(
+    const deleteTodo = await todoModel.deleteTodoByTodoId(
       validatedValue._id,
       req.userData._id
     );

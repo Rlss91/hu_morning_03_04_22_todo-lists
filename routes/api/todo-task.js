@@ -49,4 +49,24 @@ router.patch("/", async (req, res) => {
   }
 });
 
+//delete task
+router.delete("/", async (req, res) => {
+  try {
+    const validatedValue = await taskValidation.taskDeleteSchema.validateAsync(
+      { ...req.body },
+      {
+        abortEarly: false,
+      }
+    );
+    const updateTodoInfo = await todoModel.deleteTaskByTodoId(
+      validatedValue._id, //id of todo
+      validatedValue._idTask,
+      req.userData._id
+    );
+    res.json({ msg: "task deleted" });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+});
+
 module.exports = router;

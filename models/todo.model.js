@@ -45,8 +45,17 @@ const updateTaskByTodoId = (_id, _idTask, createdBy, cmd, isDone) => {
   );
 };
 
-const deleteTaskByTodoId = (_id, createdBy) => {
+const deleteTodoByTodoId = (_id, createdBy) => {
   return Todo.deleteOne({ $and: [{ _id }, { createdBy }] });
+};
+
+const deleteTaskByTodoId = (_id, _idTask, createdBy) => {
+  return Todo.updateOne(
+    { _id, createdBy },
+    {
+      $pull: { tasks: { _id: _idTask } },
+    }
+  );
 };
 
 module.exports = {
@@ -55,5 +64,6 @@ module.exports = {
   selectTodosByCreatedId,
   updateTodoTitleByTodoId,
   updateTaskByTodoId,
+  deleteTodoByTodoId,
   deleteTaskByTodoId,
 };

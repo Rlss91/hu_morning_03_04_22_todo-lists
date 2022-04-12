@@ -31,9 +31,15 @@ const taskUpdateSchema = Joi.object({
   ...taskIsDoneRoles,
 });
 
+const taskDeleteSchema = Joi.object({
+  ...GeneralRoles.objectIdRoles, //_id = todo
+  ...createTaskId(GeneralRoles.objectIdRoles),
+});
+
 module.exports = {
   taskCmdRoles,
   taskIsDoneRoles,
   taskCreateSchema,
   taskUpdateSchema,
+  taskDeleteSchema,
 };
