@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 require("dotenv").config();
+const logger = require("../config/winston");
 const app = require("../app");
 const debug = require("debug")("todo-lists:server");
 const http = require("http");
@@ -29,14 +30,16 @@ let server;
 
 connectToDb
   .then(() => {
-    console.log(chalk.magentaBright.bold("connected to MongoDb!"));
+    // console.log(chalk.magentaBright.bold("connected to MongoDb!"));
+    logger.info("connected to MongoDb!");
     server = http.createServer(app);
     server.listen(port);
     server.on("error", onError);
     server.on("listening", onListening);
   })
   .catch((err) => {
-    console.log(chalk.redBright.bold(`could not connect to mongoDb: ${err}`));
+    // console.log(chalk.redBright.bold(`could not connect to mongoDb: ${err}`));
+    logger.fatal(`could not connect to mongoDb: ${err}`);
     process.exit(1);
   });
 
@@ -74,11 +77,13 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case "EACCES":
-      console.error(bind + " requires elevated privileges");
+      // console.error(bind + " requires elevated privileges");
+      logger.fatal(bind + " requires elevated privileges");
       process.exit(1);
       break;
     case "EADDRINUSE":
-      console.error(bind + " is already in use");
+      // console.error(bind + " is already in use");
+      logger.fatal(bind + " is already in use");
       process.exit(1);
       break;
     default:
@@ -94,5 +99,6 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
-  console.log("Listening on " + bind);
+  // console.log("Listening on " + bind);
+  logger.info("Listening on " + bind);
 }

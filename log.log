@@ -1,0 +1,2 @@
+{"level":"fatal","message":"could not connect to mongoDb: MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:1111","timestamp":"2022-04-12T10:44:39.540Z"}
+{"level":"info","message":"connected to MongoDb!","timestamp":"2022-04-12T10:47:32.124Z"}
