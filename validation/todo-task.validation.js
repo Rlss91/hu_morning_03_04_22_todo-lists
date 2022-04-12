@@ -11,29 +11,29 @@ const taskIsDoneRoles = {
 };
 
 const taskCreateSchema = Joi.object({
-  ...GeneralRoles.objectIdRoles,
+  ...GeneralRoles.objectIdRolesDynamic(),
   ...taskCmdRoles,
   ...taskIsDoneRoles,
 });
 
-const createTaskId = (originalId) => {
-  const newRole = _.cloneDeep(originalId);
-  newRole["_idTask"] = newRole["_id"];
-  delete newRole["_id"];
-  return newRole;
-  // delete Object.assign(newRole, { _idTask: newRole["_id"] })["_id"];
-};
+// const createTaskId = (originalId) => {
+//   const newRole = _.cloneDeep(originalId);
+//   newRole["_idTask"] = newRole["_id"];
+//   delete newRole["_id"];
+//   return newRole;
+//   // delete Object.assign(newRole, { _idTask: newRole["_id"] })["_id"];
+// };
 
 const taskUpdateSchema = Joi.object({
-  ...GeneralRoles.objectIdRoles, //_id = todo
-  ...createTaskId(GeneralRoles.objectIdRoles),
+  ...GeneralRoles.objectIdRolesDynamic(), //_id = todo
+  ...GeneralRoles.objectIdRolesDynamic("_idTask"),
   ...taskCmdRoles,
   ...taskIsDoneRoles,
 });
 
 const taskDeleteSchema = Joi.object({
-  ...GeneralRoles.objectIdRoles, //_id = todo
-  ...createTaskId(GeneralRoles.objectIdRoles),
+  ...GeneralRoles.objectIdRolesDynamic(), //_id = todo
+  ...GeneralRoles.objectIdRolesDynamic("_idTask"),
 });
 
 module.exports = {
