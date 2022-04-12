@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const GeneralRoles = require("./general.validation");
 const todoTaskValidation = require("./todo-task.validation");
 
 const titleRoles = {
@@ -25,6 +26,16 @@ const todoCreateSchema = Joi.object({
   ...tasksRoles,
 });
 
+const todoUpdateSchema = Joi.object({
+  ...GeneralRoles.objectIdRoles,
+  ...titleRoles,
+});
+const todoDeleteSchema = Joi.object({
+  ...GeneralRoles.objectIdRoles,
+});
+
 module.exports = {
   todoCreateSchema,
+  todoUpdateSchema,
+  todoDeleteSchema,
 };

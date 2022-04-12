@@ -40,23 +40,40 @@ router.post("/", async (req, res) => {
   }
 });
 
-//create new task in todo
-router.post("/newTask", async (req, res) => {
-  //id of todo
-  //task cmd and task isDone
+//update todo
+router.patch("/", async (req, res) => {
   try {
-    const validatedValue = await todoValidation.taskCreateSchema.validateAsync(
+    const validatedValue = await todoValidation.todoUpdateSchema.validateAsync(
       { ...req.body },
       {
-        abortEarly: false,
+        abortEarly: true,
       }
     );
-    const updateTodoInfo = await todoModel.insertTaskToTodoByTodoId(
+    const updateTodo = await todoModel.updateTaskTitleByTodoId(
       validatedValue._id,
-      validatedValue.cmd,
-      validatedValue.isDone
+      req.userData._id,
+      validatedValue.title
     );
-    res.json({ msg: "todo updated" });
+    res.json({ msg: "todo was updated" });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+});
+
+//delete
+router.delete("/", async (req, res) => {
+  try {
+    const validatedValue = await todoValidation.todoDeleteSchema.validateAsync(
+      { ...req.body },
+      {
+        abortEarly: true,
+      }
+    );
+    const deleteTodo = await todoModel.deleteTaskByTodoId(
+      validatedValue._id,
+      req.userData._id
+    );
+    res.json({ msg: "todo was deleted" });
   } catch (err) {
     res.status(400).json({ err });
   }

@@ -34,8 +34,18 @@ const insertTaskToTodoByTodoId = (_id, cmd, isDone) => {
   );
 };
 
+const updateTaskTitleByTodoId = (_id, createdBy, title) => {
+  return Todo.updateOne({ $and: [{ _id }, { createdBy }] }, { title });
+};
+
+const deleteTaskByTodoId = (_id, createdBy) => {
+  return Todo.deleteOne({ $and: [{ _id }, { createdBy }] });
+};
+
 module.exports = {
   insertTodo,
   insertTaskToTodoByTodoId,
   selectTodosByCreatedId,
+  updateTaskTitleByTodoId,
+  deleteTaskByTodoId,
 };
